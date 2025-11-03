@@ -187,8 +187,10 @@ class DataAugmentationVideo(object):
         self.global_transfo2 = transforms.Compose([color_jittering, global_transfo2_extra, self.normalize])
         self.local_transfo = transforms.Compose([color_jittering, local_transfo_extra, self.normalize])
 
-    def __call__(self, image, pos_tuple_list=None, center_crop=False):
+    def __call__(self, frame_name, image, pos_tuple_list=None, center_crop=False):
         output = {}
+
+        output["frame_name"] = frame_name
 
         # global crops:
         if pos_tuple_list is None:
@@ -208,6 +210,9 @@ class DataAugmentationVideo(object):
 
         global_crops_pos_tuple_list = [global_crop_1_pos_tuple, global_crop_2_pos_tuple]
         output["global_crops_pos_tuple"] = global_crops_pos_tuple_list
+
+        # # global crops for teacher:
+        # output["global_crops_teacher"] = [global_crop_1, global_crop_2]
 
         # local crops:
         local_crops = [
