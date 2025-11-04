@@ -37,6 +37,9 @@ class SSLArch(nn.Module):
         self.future_tea_ibot_loss_weight = cfg.ibot.future_tea_ibot_loss_weight
         self.past_future_MSE_loss_weight = cfg.ibot.past_future_MSE_loss_weight
 
+        self.debug_save = cfg.train.debug_save_path
+        self.debug_save_path = cfg.train.debug_save_path
+
         student_model_dict = dict()
         teacher_model_dict = dict()
 
@@ -166,8 +169,7 @@ class SSLArch(nn.Module):
         if self.debug_save:
             frame_name_current = images["frame_name_current"]
             frame_name_past = images["frame_name_past"]
-            if self.use_future_aux:
-                frame_name_future = images["frame_name_future"]
+            frame_name_future = images["frame_name_future"]
             if distributed.is_main_process():
                 save_and_visualize_masks(iteration, self.debug_save_path, frame_name_current, global_crops.detach().cpu(), masks.detach().cpu())
         ######################################################
