@@ -1,6 +1,4 @@
-base_model/__pycache__/
 *.csv
 *.pth
 *.npy
-*/__pycache__/
-base_model/data/__pycache__/
+__pycache__/
