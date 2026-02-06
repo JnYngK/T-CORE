@@ -1,0 +1,5 @@
+train:
+  dataset_path: LMDBFlow:lmdb=/data2/flow_dataset.lmdb:entries=/data2/flow_dataset.labels.csv
+  batch_size_per_gpu: 32
+student:
+  arch: vit_base

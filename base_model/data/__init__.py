@@ -7,3 +7,4 @@ from .loaders import make_data_loader, make_dataset_for_videos, SamplerType
 from .collate import collate_data_and_cast_with_aux_use_past_future_frames
 from .masking import MaskingGenerator
 from .augmentations import DataAugmentationVideo
+from .augmentations_flow import FlowDataAugmentation
