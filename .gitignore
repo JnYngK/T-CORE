@@ -3,3 +3,4 @@ base_model/__pycache__/
 *.pth
 *.npy
 */__pycache__/
+base_model/data/__pycache__/
