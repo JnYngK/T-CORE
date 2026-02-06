@@ -1,5 +1,7 @@
 import torch
 import random
+import math
+from .masking import MaskingGenerator
 
 
 def gen_mask(global_crops, n_tokens, mask_probability, mask_ratio_tuple, mask_generator):
@@ -34,7 +36,19 @@ def collate_data_and_cast_with_aux_use_past_future_frames(samples_list, mask_rat
     # print(len(samples_list[0][0]))   # 3 [past_frame, current_frame, future_frame]
     # print(samples_list[0][1])   # label
     # print(samples_list[0][0][0].keys(), samples_list[0][0][1].keys())   # past_frame_dict, current_frame_dict, future_frame_dict
-    
+
+    if n_tokens is None:
+        raise ValueError("n_tokens must be provided to collate_data_and_cast_with_aux_use_past_future_frames")
+
+    # If no mask_generator provided, create a default one using MaskingGenerator.
+    # n_tokens is typically patch_count (e.g. 196 -> 14x14)
+    if mask_generator is None:
+        h = int(math.sqrt(n_tokens))
+        if h * h != n_tokens:
+            # fallback: choose ceil sqrt and MaskingGenerator works with input_size (int) as well
+            h = int(math.ceil(math.sqrt(n_tokens)))
+        mask_generator = MaskingGenerator(input_size=h)
+
     n_global_crops = len(samples_list[0][0][0]["global_crops"])
     n_local_crops = len(samples_list[0][0][0]["local_crops"])
 
