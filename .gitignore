@@ -2,3 +2,4 @@ base_model/__pycache__/
 *.csv
 *.pth
 *.npy
+*/__pycache__/
